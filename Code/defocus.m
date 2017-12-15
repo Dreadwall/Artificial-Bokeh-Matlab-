@@ -3,6 +3,7 @@ function [defocused_image] = defocus(Image_Path, alpha)
 sigma_s = 2;
 sigma_r = 50;
 max_window = 25;
+growth = 1;
 
 %cmu_alpha = 2;
 %2_trees_alpha = 3;
@@ -35,7 +36,7 @@ depth_map = imresize(mydepthMap(Image_Path), [dims(1) dims(2)]);
 %Defocus Based on Window Size
 %Pre-compute wide range of Gaussian Distributions based on window_size
 for window_size = 0:max_window
-    [X,Y] = meshgrid(-window_size:window_size,-window_size:window_size);
+    [X,Y] = meshgrid(-window_size*growth:window_size*growth,-window_size*growth:window_size*growth);
     G = exp(-(X.^2+Y.^2)/(2*sigma_s^2));
     windows{window_size+1} = G;
 end
